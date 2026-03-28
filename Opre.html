@@ -137,7 +137,7 @@
 </head>
 <body>
 <canvas id="gameCanvas"></canvas>
-<audio id="bgMusic" src="Calm%20in%20the%20Clouds.mp3" preload="auto"></audio>
+<audio id="bgMusic" src="Calm%20in%20the%20Clouds%20Loop.wav" preload="auto" loop></audio>
 
 <div id="ui">
   <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -266,6 +266,7 @@ let justPressedJump = false;
 let masterVolume = 0.9;
 let musicVolume = 0.45;
 let sfxVolume = 1;
+const MUSIC_LOOP_START = 0;
 
 // ─── Player ───────────────────────────────────────────────────────────────────
 const PLAYER_W = 22, PLAYER_H = 28;
@@ -333,16 +334,11 @@ function unlockAudioFromGesture() {
 }
 
 updateAudioMix();
-bgMusic.loop = false;
-
-bgMusic.addEventListener("ended", () => {
-  bgMusic.currentTime = 0;
-  bgMusic.play().catch(() => {});
-});
+bgMusic.preload = "auto";
 
 function startMusic(resetTrack=false) {
   updateAudioMix();
-  if (resetTrack) bgMusic.currentTime = 0;
+  if (resetTrack) bgMusic.currentTime = MUSIC_LOOP_START;
   if (bgMusic.paused) {
     bgMusic.play().catch(() => {});
   }
